@@ -1,26 +1,60 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
+
+// Enzyme configurations
+import Adapter from 'enzyme-adapter-react-16';
+
+// Shallow render method only renders just the give component with its 
+// inner contents like div, text input etc 
+// but none of its react Children Component will render
+import { shallow, configure } from 'enzyme';
 
 import App from '../App';
+import CommentBox from '../CommentBox';
+import CommentList from '../CommentList';
+
+// new instance of adapter
+configure({adapter: new Adapter()});
 
 // test function
 // first arg - String description of the test, second arg - func with test logic
 // reading this test as - test 'shows a comment box' for making meaningful description
-test('shows a comment box', () => {
+test('shows one CommentBox component', () => {
+  // using Shallow render method of enzyme to render only App component
+  // wrapped - a shallow instance object we get from this is a wrapped version of App component
+  // wrapped specifically means that this is a wrapped component that has some additional 
+  // functionalities loaded on top with Enzyme
+  const wrapped = shallow(<App />)
+
+  // to find CommentBox component inside of our wrapped App component
+  // find method returns back an array which contains every instance of CommentBox that was found
+  // although we only care about one copy of CommentBox that was created
+  expect(wrapped.find(CommentBox).length).toEqual(1) // length of array
+  // to make sure there's One CommentBox component inside our App component
+
+});
+
+test('shows one CommentList component', () => {
+  const wrapper = shallow(<App />)
+
+  expect(wrapper.find(CommentList).length).toEqual(1)
+})
+
+
   // JSDOM is the virtual browser in the command line
   // creating fake div inside JSDOM
-  const div = document.createElement('div')
+  // const div = document.createElement('div')
 
   // Rendering instance of App component inside of fake div for testing into JSDOM
   // React looks inside the div & checks to see if the CommentBox is in there
-  ReactDOM.render(<App />, div)
+  // ReactDOM.render(<App />, div)
   // console log in cli
   // console.log(div.innerHTML)
 
   // expect func, first arg is the Subject of our expectation, 
   // it can be object, property, array or anything else that we want to inspect
   // Here, we wanted to inspect the html contain by that div element
-  expect(div.innerHTML).toContain('Comment Box') // toBeTruthy(), no arg - true/false values
+  // expect(div.innerHTML).toContain('Comment Box') // toBeTruthy(), no arg - true/false values
   // toContain is the Matcher statement is to clarify what property & how we want to 
   // inspect the 'Subject'
   // In this case, Subject to contain a string - 'Comment Box'
@@ -36,5 +70,5 @@ test('shows a comment box', () => {
 
   // function to Remove instance of App component 
   // Clean Up method
-  ReactDOM.unmountComponentAtNode(div)
-});
+  // ReactDOM.unmountComponentAtNode(div)
+// });
