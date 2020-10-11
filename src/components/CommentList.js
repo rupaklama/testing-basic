@@ -3,7 +3,7 @@ import React from 'react'
 const CommentList = () => {
   return (
     <div>
-      list
+      Comment List
     </div>
   )
 }
