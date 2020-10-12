@@ -5,7 +5,7 @@ import React from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 
 // Shallow render method only renders just the give component with its 
-// inner contents like div, text input etc 
+// inner contents like div, text, input etc 
 // but none of its react Children Component will render
 import { shallow, configure } from 'enzyme';
 
@@ -16,26 +16,34 @@ import CommentList from '../CommentList';
 // new instance of adapter
 configure({adapter: new Adapter()});
 
+// if there's a common code between multiple tests in a single file,
+// we use jest's beforeEach helper func to extract that common logic
+let wrapper; // let to reassigned new values to this variable several times during test
+beforeEach(() => {
+  // any logic we put here gets executed before all the tests below
+  wrapper = shallow(<App />)
+});
+
 // test function
 // first arg - String description of the test, second arg - func with test logic
-// reading this test as - test 'shows a comment box' for making meaningful description
+// reading this test as - test 'shows one CommentBox component' for making meaningful description
 test('shows one CommentBox component', () => {
   // using Shallow render method of enzyme to render only App component
   // wrapped - a shallow instance object we get from this is a wrapped version of App component
   // wrapped specifically means that this is a wrapped component that has some additional 
   // functionalities loaded on top with Enzyme
-  const wrapped = shallow(<App />)
+  // const wrapped = shallow(<App />)
 
   // to find CommentBox component inside of our wrapped App component
-  // find method returns back an array which contains every instance of CommentBox that was found
+  // find method returns back an array which contains every instances of CommentBox that was found
   // although we only care about one copy of CommentBox that was created
-  expect(wrapped.find(CommentBox).length).toEqual(1) // length of array
+  expect(wrapper.find(CommentBox).length).toEqual(1) // length of array
   // to make sure there's One CommentBox component inside our App component
 
 });
 
 test('shows one CommentList component', () => {
-  const wrapper = shallow(<App />)
+  // const wrapper = shallow(<App />)
 
   expect(wrapper.find(CommentList).length).toEqual(1)
 })
