@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Root from '../../Root';
+
 import Adapter from 'enzyme-adapter-react-16';
 
 // instead of shallow, we will use Full DOM render method for demo
@@ -22,7 +24,11 @@ configure({ adapter: new Adapter() });
 // runs before each of our tests
 let wrapper;
 beforeEach(() => {
-  wrapper = mount(<CommentBox />);
+  wrapper = mount(
+    <Root>
+      <CommentBox />
+    </Root>
+  );
 });
 
 // helper function to unmount or clean up component in the JSDOM
@@ -94,7 +100,7 @@ test('when form is submitted, text area gets emptied', () => {
   expect(wrapper.find('textarea').prop('value')).toEqual('');
 });
 
-// same as above 
+// same as above
 // describe func/statement is to group together similar sets of tests
 // to prevent DRY code
 // first arg describes both the tests below, second arg func wraps both tests below
@@ -117,4 +123,3 @@ test('when form is submitted, text area gets emptied', () => {
 //     expect(wrapper.find('textarea').prop('value')).toEqual('');
 //   });
 // });
-
