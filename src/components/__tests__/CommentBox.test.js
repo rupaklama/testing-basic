@@ -1,5 +1,7 @@
 import React from 'react';
 
+// This test file needs to connect to Redux store since
+// our app is based on react-redux
 import Root from '../../Root';
 
 import Adapter from 'enzyme-adapter-react-16';
@@ -25,6 +27,7 @@ configure({ adapter: new Adapter() });
 let wrapper;
 beforeEach(() => {
   wrapper = mount(
+    // to access Redux Store in test files
     <Root>
       <CommentBox />
     </Root>
