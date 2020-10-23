@@ -10,8 +10,8 @@ import { createStore, applyMiddleware } from 'redux';
 
 import reducers from './reducers';
 
-// redux thunk
-import thunk from 'redux-thunk';
+// redux promise to make async network request
+import reduxPromise from 'redux-promise';
 
 // redux dev tool
 import { composeWithDevTools } from 'redux-devtools-extension';
@@ -44,7 +44,7 @@ export default ({ children, initialState = {} }) => {
       store={createStore(
         reducers,
         initialState,
-        composeWithDevTools(applyMiddleware(thunk))
+        composeWithDevTools(applyMiddleware(reduxPromise))
       )}
     >
       {children}

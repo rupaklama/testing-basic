@@ -40,14 +40,14 @@ afterEach(() => {
   wrapper.unmount();
 });
 
-test('has a text area and a button', () => {
+test('has a text area and two buttons', () => {
   // find helper can be use for finding Component instances & also
   // to find normal HTML elements as well
   // console.log(wrapper.find('textarea').length)
   // console.log(wrapper.find('button').length)
 
   expect(wrapper.find('textarea').length).toEqual(1);
-  expect(wrapper.find('button').length).toEqual(1);
+  expect(wrapper.find('button').length).toEqual(2);
 });
 
 // following Steps of Simulating/Faking Events
