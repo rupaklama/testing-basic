@@ -107,7 +107,12 @@ test('when form is submitted, text area gets emptied', () => {
   
   // now making attempt to Submit the form itself to verify if textarea gets emptied out after submitting 
   // When we simulate event, we use normal 'html name' of the event
-  wrapper.find('form').simulate('submit');
+  wrapper.find('form').simulate('submit'); 
+  // ADD { preventDefault: () => {},} as a second arg in simulate func to mock e.preventDefault() & to aviod undefined issue with Shallow render
+  // type error: cannot read property 'preventdefault' of undefined 
+  // To mock, e.preventDefault()
+  // NOTE - this is an issue only when using shallow enzyme renderer. 
+  // In case of full DOM renderer mount, the event object contains the preventDefault method, therefore you don't have to mock it.
 
   // when we submit the form, it will call - handleSubmit func
   // which will change our state value to empty string by calling setComment('') to clear the form values
