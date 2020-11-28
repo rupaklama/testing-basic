@@ -89,24 +89,31 @@ test('has a text area that users can type in', () => {
 });
 
 test('when form is submitted, text area gets emptied', () => {
+  // we need to make sure text area has some text inside of it. 
+  // If we submit a form without a text in it, we are not doing a very good test.
+  // So, we will add string value of 'new comment' in our text area element 
+  // mocking the form - pretending that the text - 'new comment' is inside of text area element 
+  // to submit a form with a text
   wrapper
     .find('textarea')
-    .simulate('change', { target: { value: 'new comment' } });
+  // mock/fake event object of 'e.target.value' which sets our comment state with value - 'new comment'
+    .simulate('change', { target: { value: 'new comment' } }); 
+  
+  // forcing our component to update right away to appply new state of 'new comment'
   wrapper.update();
-  // To make sure textarea has a value &
-  // since we have this test above, don't include here
-  // expect(wrapper.find('textarea').prop('value')).toEqual('new comment')
-
-  // now making attempt to Submit the form itself to verify if textarea gets emptied out
-  // When we simulate event, we use normal html name of the event
+  
+  // now making attempt to Submit the form itself to verify if textarea gets emptied out after submitting 
+  // When we simulate event, we use normal 'html name' of the event
   wrapper.find('form').simulate('submit');
 
   // when we submit the form, it will call - handleSubmit func
-  // which will change our state value to empty string by calling setComment('')
+  // which will change our state value to empty string by calling setComment('') to clear the form values
   // setComment('') is a async operation, so we need to force our component to update
-  // in order to change our state value
+  // in order to change our state value to inital state of '' after submitting form
+  // forcing our component to update right away to update comment state to '' - initial state
   wrapper.update();
 
+  // comment state to be empty string - const [comment, setComment] = useState('');
   expect(wrapper.find('textarea').prop('value')).toBe('');
 });
 
