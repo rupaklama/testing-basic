@@ -49,17 +49,20 @@ test('has a text area and two buttons', () => {
   // console.log(wrapper.find('textarea').length)
   // console.log(wrapper.find('button').length)
 
-  expect(wrapper.find('textarea').length).toEqual(1);
-  expect(wrapper.find('button').length).toEqual(2);
+  // NOTE: use toBe() for primitive types - numbers, strings, null, undefined & boolean
+  // use toEqual() only for an objects - object {}, array & function
+  expect(wrapper.find('textarea').length).toBe(1);
+  expect(wrapper.find('button').length).toBe(2);
 });
 
 // following Steps of Simulating/Faking Events
 // 1. Find the textarea element - wrapper.find('textarea')
-// 2. Simulate/fake a 'change' event - .simulate(event,[mock]) of enzyme
-// 3. Provide a fake event object - mock event object
-// 4. Force the component to update/re-render -  to avoid
-//    default behaviour of react where react does it asynchronously taking some time,
-//    to do this, we can use enzyme's update() func
+// 2. Simulate/fake a 'change' event - .simulate(event,[mock]) method of enzyme
+// simulate(event,[mock]) method - first arg is html DOM event & second arg [mock] is fake event object
+// 3. Provide html DOM event & mock event object 'e.target.value' in simulate method
+// 4. Force the component to re-render -  to avoid
+//    default behaviour of react where react does it asynchronously taking some time to re-render,
+//    we can use enzyme's 'update()' func to re-render right away after we update component's state
 // 5. Expectation - Assert that text areas value has changed
 
 // making sure the text input is working & storing input values
@@ -70,18 +73,19 @@ test('has a text area that users can type in', () => {
   // to our event handlers
   wrapper
     .find('textarea')
-    .simulate('change', { target: { value: 'new comment' } });
-  // NOTE - mock event object gets dump as an arg into our event handler -
-  // onChange(({ target: { value: 'new comment'}})) as an event in the CommentBox component
+    .simulate('change', { target: { value: 'new comment' } }); // creating piece of new state - 'new comment' in our component's comment state
+  // NOTE - mock event object { target: { value: 'new comment' } } which is suppose to be 'e.target.value' in our component's onChange handler method
+  // gets dump as an arg into our component's event handler - handleOnChange
+  // ({ target: { value: 'new comment'}}) is pass as a value for an event into handleOnchange(event)
   // Now, mock event is creating piece of new state - 'new comment'
 
-  // Forcing the component to update/re-render
+  // Forcing the component to re-render when comment state gets updated with setState
   wrapper.update();
 
-  // assertion that text area got our new value - 'new comment'
-  // .prop(key) allows us to access props passed into any element into our react components
-  expect(wrapper.find('textarea').prop('value')) // value is name of the prop in <textarea />
-    .toEqual('new comment');
+  // assertion that text area got our new value/state - 'new comment'
+  // .prop(key) allows us to access props passed into any element into our react components like value={}, onChange={}, onSubmit={}
+  expect(wrapper.find('textarea').prop('value')) // value attribute in <textarea />
+    .toBe('new comment');
 });
 
 test('when form is submitted, text area gets emptied', () => {
@@ -103,7 +107,7 @@ test('when form is submitted, text area gets emptied', () => {
   // in order to change our state value
   wrapper.update();
 
-  expect(wrapper.find('textarea').prop('value')).toEqual('');
+  expect(wrapper.find('textarea').prop('value')).toBe('');
 });
 
 // same as above
