@@ -102,6 +102,9 @@ test('when form is submitted, text area gets emptied', () => {
   // forcing our component to update right away to appply new state of 'new comment'
   wrapper.update();
   
+  expect(wrapper.find('textarea').prop('value')) // value attribute in <textarea />
+    .toBe('new comment');
+  
   // now making attempt to Submit the form itself to verify if textarea gets emptied out after submitting 
   // When we simulate event, we use normal 'html name' of the event
   wrapper.find('form').simulate('submit');
