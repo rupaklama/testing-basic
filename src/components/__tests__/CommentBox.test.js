@@ -6,7 +6,7 @@ import Root from '../../Root';
 
 import Adapter from 'enzyme-adapter-react-16';
 
-// NOTE: WE ARE DOING INTEGRATION TEST HERE EVEN THOUGH WE ARE RENDERING ONLY ONE COMPONENT. 
+// NOTE: WE ARE USING MOUNT INSTEAD OF SHALLOW HERE for unit testing.
 // THIS IS JUST FOR DEMO. USE SHALLOW RENDERING HERE IN PRODUCTION.
 
 // instead of shallow, we will use Full DOM render method for demo
