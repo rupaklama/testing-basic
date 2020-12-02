@@ -10,7 +10,7 @@ configure({ adapter: new Adapter() });
 // first arg describes both the tests below, second arg func wraps both tests below
 
 // making sure this action has a correct type & payload
-describe('save_comment', () => {
+describe('saveComment', () => {
   // we are going to call action creators & write expectations on action 
   test('has the correct type', () => {
     const action = saveComment()
